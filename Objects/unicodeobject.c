@@ -10232,6 +10232,19 @@ PyUnicode_Splitlines(PyObject *string, int keepends)
     return list;
 }
 
+/** 
+ * @brief str.split实现
+ *
+ * @details 字符串的split功能函数实现
+ *
+ * @note cpython实现
+ *
+ * @param self 实例自身
+ * @param substring 由多个分隔符构成的字符串
+ * @param maxcount 最多个数
+ *
+ * @return 字符串实例
+ */
 static PyObject *
 split(PyObject *self,
       PyObject *substring,
@@ -10244,10 +10257,12 @@ split(PyObject *self,
 
     if (maxcount < 0)
         maxcount = PY_SSIZE_T_MAX;
-
+    
+    // TODO: 预编译
     if (PyUnicode_READY(self) == -1)
         return NULL;
 
+    // 针对不同类型字符1/2/4字节分别处理
     if (substring == NULL)
         switch (PyUnicode_KIND(self)) {
         case PyUnicode_1BYTE_KIND:
